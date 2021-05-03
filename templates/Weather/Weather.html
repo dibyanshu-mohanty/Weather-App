@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css" integrity="sha384-B0vP5xmATw1+K9KRQjQERJvTumQW0nPEzvF6L/Z6nronJ3oUOFUFpCjEUQouq2+l" crossorigin="anonymous">
+  <link rel="preconnect" href="https://fonts.gstatic.com">
+  <link href="https://fonts.googleapis.com/css2?family=New+Tegomin&display=swap" rel="stylesheet">
+  <script src="https://use.fontawesome.com/1d73bc2d77.js"></script>
+  <title>Weather App</title>
+</head>
+
+<body>
+  <header class="top-container pt-5" style="  background: rgb(2,0,36);
+        background: linear-gradient(90deg, rgba(2,0,36,1) 0%, rgba(9,9,121,0.9587185215883228) 49%, rgba(0,212,255,1) 93%);
+        text-align: left;
+        height: 12rem;
+        color: white;">
+    <div class="ml-5">
+      <section class="mb-4">
+        <h1 style="font-family: 'New Tegomin', serif;"><strong><i class="fa fa-cloud" aria-hidden="true"></i>What's the Weather like ?<i class="fa fa-cloud" aria-hidden="true"></i></strong></h1>
+      </section>
+    </div>
+  </header>
+  <section class=" mid-container mt-5" >
+    <form method="POST"> 
+      {% csrf_token %}  
+    <div class="input-group ml-auto mr-auto" style="width: 18rem;"> 
+      {{form.name}}
+      <button type="submit" class="btn btn-primary">Add City</button>
+      {% if message %}
+      <div class="alert alert-{{message_class}} alert-dismissable" data-dismiss="alert">{{message}} 
+        <span aria-hidden="true">&times;</span>
+      </div>
+      {% endif %}
+    </div>
+
+</form> 
+  {% for listings in weather_list %}
+  <div class="row"> 
+    <div class="card ml-auto mr-auto mt-3" style="width: 18rem; background-color:#f8f5f1;">
+      <div class="card-body">
+        <div class="media-right">
+          <a href="{% url 'delete_city' listings.City %}">
+            <button class="close" data-dismiss="card"><span aria-hidden="true">&times;</span></button>
+          </a>
+        </div>
+        <h3 class="card-title"><strong>{{ listings.City }}</strong></h3>
+        <p class="card-text">Temperature : {{ listings.temperature }}°C <img class="image is-50x50" src="http://openweathermap.org/img/wn/{{ listings.icon }}.png" alt=""></p>
+        <p>{{ listings.description }}</p>
+      </div>
+    </div>
+    </div>
+   {% endfor %} 
+  </section>
+
+
+
+
+  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.min.js" integrity="sha384-+YQ4JLhjyBLPDQt//I+STsc9iw4uQqACwlvpslubQzn4u2UU2UFM80nGisd026JF" crossorigin="anonymous"></script>
+</body>
+
+</html>
