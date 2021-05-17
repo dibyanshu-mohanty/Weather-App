@@ -1,0 +1,1 @@
+web : gunicorn WApp.wsgi --log-file -
